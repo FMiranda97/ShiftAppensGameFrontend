@@ -1,5 +1,6 @@
 import {createStore} from 'vuex'
 import axios from "axios";
+import {router} from "../main"
 
 function calculateRemainingTime(expirationTime) {
     const currentTime = new Date().getTime();
@@ -12,11 +13,9 @@ function calculateRemainingTime(expirationTime) {
 const store = createStore({
     state() {
         const authInfo = JSON.parse(localStorage.getItem('authInfo'))
-        if(authInfo) {
+        if (authInfo) {
             const state = {
-                ...authInfo,
-                challenges: [],
-                leaderboards: []
+                ...authInfo, challenges: [], leaderboards: []
             }
             const remainingTime = calculateRemainingTime(authInfo.expirationTime)
             setTimeout(() => {
@@ -44,13 +43,14 @@ const store = createStore({
             state.username = payload.username
             state.expirationTime = payload.expirationTime
             localStorage.setItem('authInfo', JSON.stringify({
-                isLoggedIn: true, isAdmin: payload.isAdmin, token: payload.token, userId: payload.userId, username: payload.username, expirationTime: payload.expirationTime
+                isLoggedIn: true,
+                isAdmin: payload.isAdmin,
+                token: payload.token,
+                userId: payload.userId,
+                username: payload.username,
+                expirationTime: payload.expirationTime
             }))
-            if (payload.token) {
-                axios.defaults.headers.common["Authorization"] = `Bearer ${payload.token}`;
-            } else {
-                delete axios.defaults.headers.common["Authorization"];
-            }
+            axios.defaults.headers.common["Authorization"] = `Bearer ${payload.token}`;
         }, logout(state) {
             state.isLoggedIn = false
             state.isAdmin = false
@@ -70,25 +70,26 @@ const store = createStore({
             axios.post(`${process.env.VUE_APP_BACKEND_URL}/auth/login`, {
                 username: payload.username, password: payload.password
             }).then(response => {
-                const expirationTime = new Date(
-                    new Date().getTime() + +response.data.expiresIn * 1000
-                ).toISOString();
+                const expirationTime = new Date(new Date().getTime() + +response.data.expiresIn * 1000).toISOString();
                 const remainingTime = calculateRemainingTime(expirationTime)
                 setTimeout(() => {
                     context.dispatch('logout');
                 }, remainingTime)
                 context.commit('login', {...response.data, expirationTime})
+                router.push('/challenges')
             }).catch(error => {
                 console.log(error.response)
             })
         }, logout(context) {
             context.commit('logout')
             localStorage.clear()
+            router.push('/')
         }, signup(context, payload) {
             axios.post(`${process.env.VUE_APP_BACKEND_URL}/auth/signup`, {
                 username: payload.username, email: payload.email, password: payload.password
             }).then(response => {
                 context.commit('login', response.data)
+                router.push('/challenges')
             }).catch(error => {
                 console.log(error.response)
             })

@@ -1,7 +1,10 @@
 <template>
   <div class="page">
-    <div class="points">{{ points }}</div>
-    <span class="points-label">Pontuação</span>
+    <template v-if="isLoggedIn">
+      <div class="points">{{ points }}</div>
+      <span class="points-label">Pontuação</span>
+    </template>
+
 
     <span class="challenge-group" v-if="currentChallenges.length > 0">Desafios do momento</span>
     <div class="challenges-now" v-if="currentChallenges.length > 0">
@@ -46,7 +49,8 @@ export default {
   },
   computed: {
     ...mapGetters([
-      'challenges'
+      'challenges',
+        'isLoggedIn'
     ]),
     currentChallenges() {
       return this.challenges.filter((challenge) => {
@@ -62,7 +66,6 @@ export default {
   created() {
     axios.get(`${process.env.VUE_APP_BACKEND_URL}/challenges/userpoints`)
         .then((response) => {
-          console.log(response)
           this.points = response.data.userPoints
         })
         .catch(error => {

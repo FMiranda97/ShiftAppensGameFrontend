@@ -64,13 +64,13 @@ export default {
         idChallenge: this.id,
         code: this.validationCode
       })
-          .then(() => {
-            this.challengeCompleted = true
-          })
-          .catch(error => {
-            console.log(error.response)
-            this.error = true
-          })
+        .then(() => {
+          this.challengeCompleted = true
+        })
+        .catch(error => {
+          console.log(error.response)
+          this.error = true
+        })
     }
   },
   created() {
@@ -126,7 +126,6 @@ button {
   margin: 1rem;
   color: #9400d3;
 }
-
 
 
 .controls {
