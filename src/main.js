@@ -14,7 +14,8 @@ import axios from "axios";
 axios.defaults.headers.post["Content-Type"] = "application/json";
 
 const routes = [
-    {path: '/', component: ChallengePage},
+    {path: '/', component: HomePage},
+    {path: '/challenges', component: ChallengePage},
     {path: '/signup', component: SignUp},
     {path: '/login', component: SignIn},
     {path: '/challenge/:id', component: ChallengeDetail},
@@ -31,8 +32,10 @@ app.use(store)
 app.use(router)
 
 import { library } from "@fortawesome/fontawesome-svg-core";
-import {faRankingStar} from "@fortawesome/free-solid-svg-icons";
+import {faRankingStar, faFaceSmile} from "@fortawesome/free-solid-svg-icons";
+import HomePage from "@/components/HomePage";
 app.component("font-awesome-icon", FontAwesomeIcon)
 library.add(faRankingStar)
+library.add(faFaceSmile)
 
 app.mount('#app')
