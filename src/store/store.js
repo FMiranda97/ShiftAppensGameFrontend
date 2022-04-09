@@ -1,9 +1,27 @@
 import {createStore} from 'vuex'
 import axios from "axios";
 
+function calculateRemainingTime(expirationTime) {
+    const currentTime = new Date().getTime();
+    const adjExpirationTime = new Date(expirationTime).getTime();
+    return adjExpirationTime - currentTime;
+}
+
+
 // Create a new store instance.
 const store = createStore({
     state() {
+        const authInfo = JSON.parse(localStorage.getItem('authInfo'))
+        if(authInfo) {
+            const state = {
+                ...authInfo,
+                challenges: [],
+                leaderboards: []
+            }
+            axios.defaults.headers.common["Authorization"] = `Bearer ${authInfo.token}`;
+            return state
+        }
+
         return {
             isLoggedIn: false,
             isAdmin: false,
@@ -20,6 +38,10 @@ const store = createStore({
             state.token = payload.token
             state.userId = payload.userId
             state.username = payload.username
+            state.expireTime = calculateRemainingTime(payload.expiresIn)
+            localStorage.setItem('authInfo', JSON.stringify({
+                isLoggedIn: true, isAdmin: payload.isAdmin, token: payload.token, userId: payload.userId, username: payload.username, expireTime: state.expireTime
+            }))
             if (payload.token) {
                 axios.defaults.headers.common["Authorization"] = `Bearer ${payload.token}`;
             } else {
@@ -50,6 +72,7 @@ const store = createStore({
             })
         }, logout(context) {
             context.commit('logout')
+            localStorage.clear()
         }, signup(context, payload) {
             axios.post(`${process.env.VUE_APP_BACKEND_URL}/auth/signup`, {
                 username: payload.username, email: payload.email, password: payload.password
