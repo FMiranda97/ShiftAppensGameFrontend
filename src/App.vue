@@ -1,9 +1,9 @@
 <template>
   <NavBar></NavBar>
 <!--  <router-view class="view"></router-view>-->
-  <router-view v-slot="{ Component }">
-    <transition name="slide" mode="out-in">
-      <component :is="Component" :duration="{ enter: 500, leave: 800 }"/>
+  <router-view v-slot="{ Component, route }">
+  <transition :name="route.meta.transitionName || 'slide-right'" mode="out-in">
+      <component :is="Component"/>
     </transition>
   </router-view>
 </template>
@@ -22,31 +22,53 @@ export default {
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
 
-.slide-leave {
+.slide-left-leave {
   transform: translateX(0);
 }
 
-.slide-leave-active {
+.slide-left-leave-active {
   transition: transform 0.2s;
 }
 
-.slide-leave-to {
+.slide-left-leave-to {
   transform: translateX(-100%);
 }
 
-.slide-enter {
+.slide-left-enter {
   transform: translateX(0);
 }
 
-.slide-enter-active {
+.slide-left-enter-active {
   transition: transform 0.2s;
 }
 
-.slide-enter-from {
+.slide-left-enter-from {
   transform: translateX(100%);
 }
 
+.slide-right-leave {
+  transform: translateX(0);
+}
 
+.slide-right-leave-active {
+  transition: transform 0.2s;
+}
+
+.slide-right-leave-to {
+  transform: translateX(100%);
+}
+
+.slide-right-enter {
+  transform: translateX(0);
+}
+
+.slide-right-enter-active {
+  transition: transform 0.2s;
+}
+
+.slide-right-enter-from {
+  transform: translateX(-100%);
+}
 
 html, body {
   font-family: Poppins, sans-serif;

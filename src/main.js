@@ -13,15 +13,27 @@ import axios from "axios";
 
 axios.defaults.headers.post["Content-Type"] = "application/json";
 
-const routes = [{path: '/', component: HomePage}, {path: '/challenges', component: ChallengePage},
+const routes = [
+    {path: '/', component: HomePage}, 
+    {path: '/challenges', component: ChallengePage},
     {path: '/signup', component: SignUp, beforeEnter: () => store.getters.isLoggedIn ? {path: '/challenges'} : true},
     {path: '/login', component: SignIn, beforeEnter: () => store.getters.isLoggedIn ? {path: '/challenges'} : true},
     {path: '/challenge/:id', component: ChallengeDetail, props: true},
-    {path: '/leaderboard', component: LeaderBoard},]
+    {path: '/leaderboard', component: LeaderBoard},
+]
 
 export const router = createRouter({
     history: createWebHistory(), routes,
 })
+
+router.afterEach((to, from) => {
+    const routesOrder = ["/", "/challenges", "/leaderboard", "/signup", "/login"]
+    const toIndex = routesOrder.indexOf(to.path)
+    const fromIndex = routesOrder.indexOf(from.path)
+    console.log(toIndex)
+    console.log(fromIndex)
+    to.meta.transitionName = toIndex < fromIndex ? 'slide-right' : 'slide-left'
+  })
 
 
 const app = createApp(App)
