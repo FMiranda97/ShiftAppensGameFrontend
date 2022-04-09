@@ -35,7 +35,7 @@ const store = createStore({
             delete axios.defaults.headers.common["Authorization"];
         },
         setChallenges(state, challenges) {
-            challenges.sort((a, b) => new Date(a.date) - new  Date(b.date))
+            challenges.sort((a, b) => new Date(a.date) - new Date(b.date))
             state.challenges = challenges;
         }
     },
@@ -65,11 +65,27 @@ const store = createStore({
             })
         },
         getChallenges(context) {
-            console.log()
             axios.get(`${process.env.VUE_APP_BACKEND_URL}/challenges`)
-            .then(response => {
-                context.commit('setChallenges', response.data.challenges)
-            }).catch(error => {
+                .then(response => {
+                    const allChallenges = response.data.challenges;
+                    if (context.state.isLoggedIn) {
+                        axios.get(`${process.env.VUE_APP_BACKEND_URL}/challenges/userchallenges`)
+                            .then(response => {
+                                const userChallengesIds = response.data.challenges.map((challenge) => {
+                                    return challenge._id
+                                });
+                                let difference = allChallenges.filter(x => !userChallengesIds.includes(x._id));
+                                console.log(allChallenges)
+                                console.log(userChallengesIds)
+                                console.log(difference)
+                                context.commit('setChallenges', difference)
+                            }).catch(error => {
+                                console.log(error.response)
+                            })
+                    } else {
+                        context.commit('setChallenges', response.data.challenges)
+                    }
+                }).catch(error => {
                 console.log(error.response)
             })
         }
