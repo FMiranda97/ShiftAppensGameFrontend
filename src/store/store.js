@@ -35,40 +35,42 @@ const store = createStore({
             delete axios.defaults.headers.common["Authorization"];
         },
         setChallenges(state, challenges) {
+            challenges.sort((a, b) => new Date(a.date) - new  Date(b.date))
             state.challenges = challenges;
         }
     },
     actions: {
         login(context, payload) {
-            axios.post('http://localhost:8080/auth/login', {
+            axios.post(`${process.env.VUE_APP_BACKEND_URL}/auth/login`, {
                 username: payload.username,
                 password: payload.password
             }).then(response => {
                 context.commit('login', response.data)
             }).catch(error => {
-                console.log(error)
+                console.log(error.response)
             })
         },
         logout(context) {
             context.commit('logout')
         },
         signup(context, payload) {
-            axios.post('http://localhost:8080/auth/signup', {
+            axios.post(`${process.env.VUE_APP_BACKEND_URL}/auth/signup`, {
                 username: payload.username,
                 email: payload.email,
                 password: payload.password
             }).then(response => {
                 context.commit('login', response.data)
             }).catch(error => {
-                console.log(error)
+                console.log(error.response)
             })
         },
         getChallenges(context) {
-            axios.get('http://localhost:8080/challenges')
+            console.log()
+            axios.get(`${process.env.VUE_APP_BACKEND_URL}/challenges`)
             .then(response => {
                 context.commit('setChallenges', response.data.challenges)
             }).catch(error => {
-                console.log(error)
+                console.log(error.response)
             })
         }
     },

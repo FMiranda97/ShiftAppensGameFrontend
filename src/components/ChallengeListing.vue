@@ -1,7 +1,7 @@
 <template>
   <div class="challenge">
-    {{title}}
-    <span class="date">{{formattedDate}}</span>
+    {{ title }}
+    <span class="date">{{preDateString}} {{ formattedDate }}</span>
     <span class="points">Pontos: {{ points || 'desconhecido' }}</span>
   </div>
 </template>
@@ -14,11 +14,16 @@ export default {
   props: ['title', 'date', 'points'],
   computed: {
     formattedDate() {
-      return moment(this.date).calendar()
+      moment.locale("pt-pt")
+      return moment(this.date).fromNow()
+    },
+    preDateString() {
+      if(new Date() > new Date(this.date)) {
+        return "Começou"
+      }else {
+        return "Começa"
+      }
     }
-  },
-  created() {
-    moment.locale("pt-pt")
   }
 }
 </script>
