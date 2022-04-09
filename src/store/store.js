@@ -18,6 +18,10 @@ const store = createStore({
                 challenges: [],
                 leaderboards: []
             }
+            const remainingTime = calculateRemainingTime(authInfo.expirationTime)
+            setTimeout(() => {
+                this.$store.dispatch('logout')
+            }, remainingTime)
             axios.defaults.headers.common["Authorization"] = `Bearer ${authInfo.token}`;
             return state
         }
@@ -38,9 +42,9 @@ const store = createStore({
             state.token = payload.token
             state.userId = payload.userId
             state.username = payload.username
-            state.expireTime = calculateRemainingTime(payload.expiresIn)
+            state.expirationTime = payload.expirationTime
             localStorage.setItem('authInfo', JSON.stringify({
-                isLoggedIn: true, isAdmin: payload.isAdmin, token: payload.token, userId: payload.userId, username: payload.username, expireTime: state.expireTime
+                isLoggedIn: true, isAdmin: payload.isAdmin, token: payload.token, userId: payload.userId, username: payload.username, expirationTime: payload.expirationTime
             }))
             if (payload.token) {
                 axios.defaults.headers.common["Authorization"] = `Bearer ${payload.token}`;
@@ -66,7 +70,14 @@ const store = createStore({
             axios.post(`${process.env.VUE_APP_BACKEND_URL}/auth/login`, {
                 username: payload.username, password: payload.password
             }).then(response => {
-                context.commit('login', response.data)
+                const expirationTime = new Date(
+                    new Date().getTime() + +response.data.expiresIn * 1000
+                ).toISOString();
+                const remainingTime = calculateRemainingTime(expirationTime)
+                setTimeout(() => {
+                    context.dispatch('logout');
+                }, remainingTime)
+                context.commit('login', {...response.data, expirationTime})
             }).catch(error => {
                 console.log(error.response)
             })
