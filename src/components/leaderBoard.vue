@@ -5,10 +5,10 @@
         class="entry"
         v-for="(user, idx) in getLeaderboards"
         :key="idx"
-        :class="{'gold': idx === 0, 'silver': idx === 1, 'bronze': idx === 2}"
+        :class="{'gold': idx === 0, 'silver': idx === 1, 'bronze': idx === 2, 'me': user.username === username}"
     >
       <span class="place" v-if="idx<3"><font-awesome-icon icon="ranking-star"/></span>
-      <span class="place" v-else>{{idx + 1}}º</span>
+      <span class="place" v-else>{{ idx + 1 }}º</span>
       <span class="user">{{ user.username }}</span>
       <span class="user">{{ user.totalPoints }} pontos</span>
     </div>
@@ -26,7 +26,8 @@ export default {
   },
   computed: {
     ...mapGetters([
-      'getLeaderboards'
+      'getLeaderboards',
+      'username'
     ])
   },
   mounted() {
@@ -66,6 +67,7 @@ h1 {
   background: #b19cd9;
   color: white;
   width: 60%;
+  opacity: 0.85;
 }
 
 .entry:first-of-type {
@@ -91,6 +93,11 @@ h1 {
 .bronze {
   color: #cd7f32;
   font-weight: 500;
+}
+
+.me {
+  transform: scale(1.05);
+  opacity: 1;
 }
 
 </style>
