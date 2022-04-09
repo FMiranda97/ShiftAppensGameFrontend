@@ -1,6 +1,6 @@
 <template>
   <header class="header">
-    <a href="/" class="brand">Cofinha</a>
+    <router-link to="/" class="brand">{{ username }}</router-link>
     <div class="header-items">
       <router-link to="/leaderboard" class="header-item">Leaderboard</router-link>
       <router-link to="/" class="header-item">Desafios</router-link>
@@ -11,7 +11,7 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
+import {mapGetters} from 'vuex'
 
 export default {
   name: 'NavBar',
@@ -19,6 +19,7 @@ export default {
     ...mapGetters([
       'isLoggedIn',
       'isAdmin',
+      'username'
     ])
   },
   methods: {
@@ -80,6 +81,7 @@ export default {
   color: white;
   cursor: pointer;
 }
+
 .header-item:hover,
 .header-item:active,
 .header-item.active-link {

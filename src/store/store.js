@@ -69,6 +69,9 @@ const store = createStore({
         },
         token(state) {
             return state.token
+        },
+        username(state) {
+            return state.username
         }
     }
 })
