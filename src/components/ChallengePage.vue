@@ -1,6 +1,6 @@
 <template>
   <div class="page">
-    <div class="points">80</div>
+    <div class="points">{{ points }}</div>
     <span class="points-label">Pontuação</span>
 
     <span class="challenge-group" v-if="currentChallenges.length > 0">Desafios do momento</span>
@@ -32,11 +32,17 @@
 
 import ChallengeListing from "@/components/ChallengeListing";
 import {mapGetters} from "vuex";
+import axios from "axios";
 
 export default {
   name: "ChallengePage",
   components: {
     ChallengeListing
+  },
+  data() {
+    return {
+      points: '?'
+    }
   },
   computed: {
     ...mapGetters([
@@ -53,8 +59,18 @@ export default {
       })
     }
   },
+  created() {
+    axios.get(`${process.env.VUE_APP_BACKEND_URL}/challenges/userpoints`)
+        .then((response) => {
+          console.log(response)
+          this.points = response.data.userPoints
+        })
+        .catch(error => {
+          console.log(error.response)
+        })
+  },
   mounted() {
-    this.$store.dispatch('getChallenges')
+    this.$store.dispatch('getChallenges');
   }
 
 }
