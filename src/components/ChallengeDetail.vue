@@ -2,7 +2,7 @@
   <div class="details">
     <span class="title">{{ title }}</span>
     <span class="time">{{preDateString}} {{ date }}</span>
-    <span class="description">{{ getChallenge(id) && getChallenge(id).description }}</span>
+    <span class="description">{{ description }}</span>
     <form class="form">
       <label for="validationCode">Código de validação</label>
       <span class="controls">
@@ -32,11 +32,14 @@ export default {
       return this.getChallenge(this.id) && moment(this.getChallenge(this.id).date).fromNow()
     },
     preDateString() {
-      if(new Date() > new Date(this.date)) {
+      if(new Date() > new Date(this.getChallenge(this.id).date)) {
         return "Começou"
       }else {
         return "Começa"
       }
+    },
+    description() {
+      return this.getChallenge(this.id) && this.getChallenge(this.id).description
     }
   },
   created() {
