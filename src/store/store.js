@@ -47,7 +47,18 @@ const store = createStore({
         },
         logout(context) {
             context.commit('logout')
-        }
+        },
+        signup(context, payload) {
+            axios.post('http://localhost:8080/auth/signup', {
+                username: payload.username,
+                email: payload.email,
+                password: payload.password
+            }).then(response => {
+                context.commit('login', response.data)
+            }).catch(error => {
+                console.log(error)
+            })
+        },
     },
     getters: {
         isLoggedIn(state) {

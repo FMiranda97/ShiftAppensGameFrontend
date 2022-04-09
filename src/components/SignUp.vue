@@ -1,11 +1,11 @@
 <template>
-  <form action="" class="controls">
+  <form @submit.prevent="signupHandler" class="controls">
     <label>Username</label>
-    <input type="text" class="control">
+    <input type="text" class="control" v-model="username">
     <label>Email</label>
-    <input type="text" class="control">
+    <input type="text" class="control" v-model="email">
     <label>Password</label>
-    <input type="text" class="control">
+    <input type="text" class="control" v-model="password">
     <button class="control">Registar</button>
     <router-link to="/login">Já te registaste?</router-link>
   </form>
@@ -13,7 +13,23 @@
 
 <script>
 export default {
-  name: "SignUp"
+  name: "SignUp",
+  data() {
+    return {
+      username: "",
+      password: "",
+      email: ""
+    }
+  },
+  methods: {
+    signupHandler() {
+      this.$store.dispatch('signup', {
+        username: this.username,
+        password: this.password,
+        email: this.email
+      })
+    }
+  }
 }
 </script>
 
