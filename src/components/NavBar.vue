@@ -105,6 +105,7 @@ export default {
 
 .menu {
   position: fixed;
+  z-index: 2;
   width: 50vw;
   height: 100vh;
   top: 0;

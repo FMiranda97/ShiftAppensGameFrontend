@@ -70,6 +70,7 @@ h1 {
   opacity: 0.85;
 }
 
+
 .entry:first-of-type {
   border-top: 4px solid #9400d3;
 }
@@ -98,6 +99,43 @@ h1 {
 .me {
   transform: scale(1.05);
   opacity: 1;
+}
+
+
+@media (max-width: 50rem) {
+  .leaderboard {
+    position: relative;
+    z-index: -1;
+    margin: 5rem 0;
+  }
+
+  .entry {
+    width: 90%;
+    flex-direction: column;
+    align-items: center;
+    font-size: 1rem;
+  }
+
+  .gold {
+    font-size: 1.6rem;
+    font-weight: 700;
+  }
+
+  .silver {
+    font-size: 1.4rem;
+    font-weight: 600;
+  }
+
+  .bronze {
+    font-size: 1.2rem;
+  }
+
+  .me {
+    z-index: 1;
+    transform: scale(1.1);
+    opacity: 1;
+  }
+
 }
 
 </style>
