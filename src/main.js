@@ -8,6 +8,10 @@ import ChallengeDetail from "@/components/ChallengeDetail";
 import SignIn from "@/components/SignIn";
 import LeaderBoard from "@/components/leaderBoard";
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
+import store from "./store/store"
+import axios from "axios";
+
+axios.defaults.headers.post["Content-Type"] = "application/json";
 
 const routes = [
     {path: '/', component: ChallengePage},
@@ -23,6 +27,7 @@ const router = createRouter({
 })
 
 const app = createApp(App)
+app.use(store)
 app.use(router)
 
 import { library } from "@fortawesome/fontawesome-svg-core";

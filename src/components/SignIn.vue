@@ -1,9 +1,9 @@
 <template>
-  <form action="" class="controls">
+  <form @submit.prevent="loginHandler" class="controls">
     <label>Username</label>
-    <input type="text" class="control">
+    <input type="text" class="control" v-model="username">
     <label>Password</label>
-    <input type="text" class="control">
+    <input type="password" class="control" v-model="password">
     <button class="control">Login</button>
     <router-link to="/signup">Esqueceu-se da password?</router-link>
   </form>
@@ -11,7 +11,21 @@
 
 <script>
 export default {
-  name: "SignUp"
+  name: "SignUp",
+  methods: {
+    loginHandler: function () {
+      this.$store.dispatch('login', {
+        username: this.username,
+        password: this.password
+      })
+    }
+  },
+  data() {
+    return {
+      username: "",
+      password: ""
+    }
+  }
 }
 </script>
 

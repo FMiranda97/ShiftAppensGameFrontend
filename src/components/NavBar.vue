@@ -4,15 +4,28 @@
     <div class="header-items">
       <router-link to="/leaderboard" class="header-item">Leaderboard</router-link>
       <router-link to="/" class="header-item">Desafios</router-link>
-      <router-link to="/signup" class="header-item">Registo / Login</router-link>
-      <a class="header-item">Logout</a>
+      <router-link v-if="!isLoggedIn" to="/signup" class="header-item">Registo / Login</router-link>
+      <button v-if="isLoggedIn" class="header-item" @click="logoutHandler">Logout</button>
     </div>
   </header>
 </template>
 
 <script>
+import { mapGetters } from 'vuex'
+
 export default {
-  name: 'NavBar'
+  name: 'NavBar',
+  computed: {
+    ...mapGetters([
+      'isLoggedIn',
+      'isAdmin',
+    ])
+  },
+  methods: {
+    logoutHandler() {
+      this.$store.dispatch('logout')
+    }
+  }
 }
 </script>
 
