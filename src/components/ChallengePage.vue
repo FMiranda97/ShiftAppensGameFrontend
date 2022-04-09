@@ -9,6 +9,8 @@
           v-for="challenge in currentChallenges"
           :title="challenge.title"
           :date="challenge.date"
+          :id="challenge._id"
+          :points="challenge.points"
           :key="challenge._id"
       ></ChallengeListing>
     </div>
@@ -18,6 +20,8 @@
           v-for="challenge in futureChallenges"
           :title="challenge.title"
           :date="challenge.date"
+          :id="challenge._id"
+          :points="challenge.points"
           :key="challenge._id"
       ></ChallengeListing>
     </div>

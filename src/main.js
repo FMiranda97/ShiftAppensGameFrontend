@@ -18,7 +18,7 @@ const routes = [
     {path: '/challenges', component: ChallengePage},
     {path: '/signup', component: SignUp},
     {path: '/login', component: SignIn},
-    {path: '/challenge/:id', component: ChallengeDetail},
+    {path: '/challenge/:id', component: ChallengeDetail, props: true},
     {path: '/leaderboard', component: LeaderBoard},
 ]
 

@@ -75,13 +75,10 @@ const store = createStore({
                                     return challenge._id
                                 });
                                 let difference = allChallenges.filter(x => !userChallengesIds.includes(x._id));
-                                console.log(allChallenges)
-                                console.log(userChallengesIds)
-                                console.log(difference)
                                 context.commit('setChallenges', difference)
                             }).catch(error => {
-                                console.log(error.response)
-                            })
+                            console.log(error.response)
+                        })
                     } else {
                         context.commit('setChallenges', response.data.challenges)
                     }
@@ -105,6 +102,9 @@ const store = createStore({
         },
         challenges(state) {
             return state.challenges
+        },
+        getChallenge: (state) => (id) =>  {
+            return state.challenges.find((challenge) => challenge._id === id)
         }
     }
 })

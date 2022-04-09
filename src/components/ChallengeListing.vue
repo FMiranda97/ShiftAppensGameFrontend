@@ -1,5 +1,5 @@
 <template>
-  <div class="challenge">
+  <div class="challenge" @click="showDetailHandler">
     {{ title }}
     <span class="date">{{preDateString}} {{ formattedDate }}</span>
     <span class="points">Pontos: {{ points || 'desconhecido' }}</span>
@@ -11,7 +11,7 @@ import moment from 'moment'
 
 export default {
   name: "ChallengeListing",
-  props: ['title', 'date', 'points'],
+  props: ['title', 'date', 'points', 'id'],
   computed: {
     formattedDate() {
       moment.locale("pt-pt")
@@ -23,6 +23,11 @@ export default {
       }else {
         return "Começa"
       }
+    }
+  },
+  methods: {
+    showDetailHandler() {
+      this.$router.push(`/challenge/${this.id}`)
     }
   }
 }
