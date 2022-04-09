@@ -50,4 +50,11 @@ export default {
   margin: 0.2rem;
 }
 
+@media (max-width: 50rem) {
+  .controls {
+    margin: 5rem 0 5rem 5%;
+    width: 90%;
+  }
+}
+
 </style>
