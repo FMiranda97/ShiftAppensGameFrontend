@@ -5,7 +5,7 @@
         class="entry"
         v-for="(user, idx) in getLeaderboards"
         :key="idx"
-        :style="{color: idx === 0 ? 'gold': idx === 1 ? 'lightgrey': idx === 2 ? '#cd7f32': 'white'}"
+        :class="{'gold': idx === 0, 'silver': idx === 1, 'bronze': idx === 2}"
     >
       <span class="place" v-if="idx<3"><font-awesome-icon icon="ranking-star"/></span>
       <span class="place" v-else>{{idx + 1}}º</span>
@@ -76,5 +76,21 @@ h1 {
   border-bottom: 4px solid #9400d3;
 }
 
+.gold {
+  color: gold;
+  font-size: 3rem;
+  font-weight: 700;
+}
+
+.silver {
+  color: lightgray;
+  font-size: 2.5rem;
+  font-weight: 600;
+}
+
+.bronze {
+  color: #cd7f32;
+  font-weight: 500;
+}
 
 </style>
