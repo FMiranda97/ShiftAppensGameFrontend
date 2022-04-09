@@ -1,10 +1,15 @@
 <template>
   <header class="header">
-    <router-link to="/" class="brand">{{ username || 'Home' }}</router-link>
+    <router-link to="/" class="brand" active-class="active-home">{{ username || 'Home' }}</router-link>
     <div class="header-items">
-      <router-link to="/challenges" class="header-item">Desafios</router-link>
-      <router-link to="/leaderboard" class="header-item">Leaderboard</router-link>
-      <router-link v-if="!isLoggedIn" to="/signup" class="header-item">Registo / Login</router-link>
+      <router-link to="/challenges" class="header-item" active-class="active">Desafios</router-link>
+      <router-link to="/leaderboard" class="header-item" active-class="active">Leaderboard</router-link>
+      <template v-if="!isLoggedIn">
+        <router-link v-if="currentRouteName !== '/login'" to="/signup" class="header-item" active-class="active">
+          Registo / Login
+        </router-link>
+        <router-link v-else to="/login" class="header-item" active-class="active">Registo / Login</router-link>
+      </template>
       <button v-if="isLoggedIn" class="header-item" @click="logoutHandler">Logout</button>
     </div>
   </header>
@@ -20,7 +25,10 @@ export default {
       'isLoggedIn',
       'isAdmin',
       'username'
-    ])
+    ]),
+    currentRouteName() {
+      return this.$route.path;
+    }
   },
   methods: {
     logoutHandler() {
@@ -80,6 +88,15 @@ export default {
   border-bottom: 2px solid rgba(0, 0, 0, 0);
   color: white;
   cursor: pointer;
+}
+
+.active {
+  border-bottom: 2px solid #aaa;
+  color: #aaa;
+}
+
+.active-home {
+  color: #aaa;
 }
 
 .header-item:hover,
