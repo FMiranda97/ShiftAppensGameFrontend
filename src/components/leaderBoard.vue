@@ -1,40 +1,36 @@
 <template>
   <div class="leaderboard">
     <h1>Leaderboard</h1>
-    <div class="entry">
-      <span class="place"><font-awesome-icon icon="ranking-star"/></span>
-      <span class="user">Osnarfio</span>
-      <span class="user">25 pontos</span>
-    </div>
-    <div class="entry">
-      <span class="place">2º</span>
-      <span class="user">Cofinha</span>
-      <span class="user">24 pontos</span>
-    </div>
-    <div class="entry">
-      <span class="place">3º</span>
-      <span class="user">Chata</span>
-      <span class="user">2 pontos</span>
-    </div>
-    <div class="entry">
-      <span class="place">4º</span>
-      <span class="user">Random</span>
-      <span class="user">1 ponto</span>
-    </div>
-    <div class="entry">
-      <span class="place">5º</span>
-      <span class="user">Quem?</span>
-      <span class="user">0 pontos</span>
+    <div
+        class="entry"
+        v-for="(user, idx) in getLeaderboards"
+        :key="idx"
+        :style="{color: idx === 0 ? 'gold': idx === 1 ? 'lightgrey': idx === 2 ? '#cd7f32': 'white'}"
+    >
+      <span class="place" v-if="idx<3"><font-awesome-icon icon="ranking-star"/></span>
+      <span class="place" v-else>{{idx + 1}}º</span>
+      <span class="user">{{ user.username }}</span>
+      <span class="user">{{ user.totalPoints }} pontos</span>
     </div>
   </div>
 </template>
 
 <script>
 
+import {mapGetters} from "vuex";
+
 export default {
   name: "leaderBoard",
   components: {
     FontAwesomeIcon
+  },
+  computed: {
+    ...mapGetters([
+      'getLeaderboards'
+    ])
+  },
+  mounted() {
+    this.$store.dispatch('getLeaderboard')
   }
 }
 

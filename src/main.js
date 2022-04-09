@@ -32,10 +32,13 @@ app.use(store)
 app.use(router)
 
 import { library } from "@fortawesome/fontawesome-svg-core";
-import {faRankingStar, faFaceSmile} from "@fortawesome/free-solid-svg-icons";
+import {faRankingStar, faFaceSmile, faCircleCheck, faCircleXmark} from "@fortawesome/free-solid-svg-icons";
 import HomePage from "@/components/HomePage";
 app.component("font-awesome-icon", FontAwesomeIcon)
 library.add(faRankingStar)
 library.add(faFaceSmile)
+library.add(faFaceSmile)
+library.add(faCircleXmark)
+library.add(faCircleCheck)
 
 app.mount('#app')

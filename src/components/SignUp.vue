@@ -6,7 +6,7 @@
     <input type="text" class="control" v-model="email">
     <label>Password</label>
     <input type="password" class="control" v-model="password">
-    <button class="control">Registar</button>
+    <button class="button">Registar</button>
     <router-link to="/login">Já te registaste?</router-link>
   </form>
 </template>

@@ -24,4 +24,23 @@ html, body {
   box-sizing: border-box;
 }
 
+.button {
+  appearance: none;
+  text-decoration: none;
+  font-size: 1.5rem;
+  font-weight: bold;
+  border: 4px solid #9400d3;
+  margin: 1rem;
+  border-radius: 10px;
+  padding: 0.5rem;
+  color: #9400d3;
+  background: #b19cd9;
+  cursor: pointer;
+}
+
+.button:hover {
+  background: #9400d3;
+  color: white;
+}
+
 </style>

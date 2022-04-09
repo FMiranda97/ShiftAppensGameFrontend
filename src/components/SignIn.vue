@@ -4,7 +4,7 @@
     <input type="text" class="control" v-model="username">
     <label>Password</label>
     <input type="password" class="control" v-model="password">
-    <button class="control">Login</button>
+    <button class="button">Login</button>
     <router-link to="/signup">Esqueceu-se da password?</router-link>
   </form>
 </template>

@@ -10,10 +10,10 @@ const store = createStore({
             token: null,
             userId: null,
             username: null,
-            challenges: []
+            challenges: [],
+            leaderboards: []
         }
-    },
-    mutations: {
+    }, mutations: {
         login(state, payload) {
             state.isLoggedIn = true;
             state.isAdmin = payload.isAdmin
@@ -25,46 +25,40 @@ const store = createStore({
             } else {
                 delete axios.defaults.headers.common["Authorization"];
             }
-        },
-        logout(state) {
+        }, logout(state) {
             state.isLoggedIn = false
             state.isAdmin = false
             state.token = null
             state.userId = null
             state.username = null
             delete axios.defaults.headers.common["Authorization"];
-        },
-        setChallenges(state, challenges) {
+        }, setChallenges(state, challenges) {
             challenges.sort((a, b) => new Date(a.date) - new Date(b.date))
             state.challenges = challenges;
+        }, setLeaderboard(state, leaderboards) {
+            leaderboards.sort((a, b) => b.totalPoints - a.totalPoints)
+            state.leaderboards = leaderboards
         }
-    },
-    actions: {
+    }, actions: {
         login(context, payload) {
             axios.post(`${process.env.VUE_APP_BACKEND_URL}/auth/login`, {
-                username: payload.username,
-                password: payload.password
+                username: payload.username, password: payload.password
             }).then(response => {
                 context.commit('login', response.data)
             }).catch(error => {
                 console.log(error.response)
             })
-        },
-        logout(context) {
+        }, logout(context) {
             context.commit('logout')
-        },
-        signup(context, payload) {
+        }, signup(context, payload) {
             axios.post(`${process.env.VUE_APP_BACKEND_URL}/auth/signup`, {
-                username: payload.username,
-                email: payload.email,
-                password: payload.password
+                username: payload.username, email: payload.email, password: payload.password
             }).then(response => {
                 context.commit('login', response.data)
             }).catch(error => {
                 console.log(error.response)
             })
-        },
-        getChallenges(context) {
+        }, getChallenges(context) {
             axios.get(`${process.env.VUE_APP_BACKEND_URL}/challenges`)
                 .then(response => {
                     const allChallenges = response.data.challenges;
@@ -85,26 +79,31 @@ const store = createStore({
                 }).catch(error => {
                 console.log(error.response)
             })
+        }, getLeaderboard(context) {
+            axios.get(`${process.env.VUE_APP_BACKEND_URL}/leaderboard`)
+                .then(response => {
+                    const leaderboard = response.data.ranks;
+                    context.commit('setLeaderboard', leaderboard)
+
+                }).catch(error => {
+                console.log(error.response)
+            })
         }
-    },
-    getters: {
+    }, getters: {
         isLoggedIn(state) {
             return state.isLoggedIn
-        },
-        isAdmin(state) {
+        }, isAdmin(state) {
             return state.isAdmin
-        },
-        token(state) {
+        }, token(state) {
             return state.token
-        },
-        username(state) {
+        }, username(state) {
             return state.username
-        },
-        challenges(state) {
+        }, challenges(state) {
             return state.challenges
-        },
-        getChallenge: (state) => (id) =>  {
+        }, getChallenge: (state) => (id) => {
             return state.challenges.find((challenge) => challenge._id === id)
+        }, getLeaderboards: (state) => {
+            return state.leaderboards
         }
     }
 })
