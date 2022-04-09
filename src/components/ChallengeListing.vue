@@ -1,15 +1,25 @@
 <template>
   <div class="challenge">
     {{title}}
-    <span class="date">08/04/2022 - 22:45</span>
-    <span class="points">Pontos: 25</span>
+    <span class="date">{{formattedDate}}</span>
+    <span class="points">Pontos: {{ points || 'desconhecido' }}</span>
   </div>
 </template>
 
 <script>
+import moment from 'moment'
+
 export default {
   name: "ChallengeListing",
-  props: ['title', 'date', 'points']
+  props: ['title', 'date', 'points'],
+  computed: {
+    formattedDate() {
+      return moment(this.date).calendar()
+    }
+  },
+  created() {
+    moment.locale("pt-pt")
+  }
 }
 </script>
 

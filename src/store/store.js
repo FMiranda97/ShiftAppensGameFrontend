@@ -10,6 +10,7 @@ const store = createStore({
             token: null,
             userId: null,
             username: null,
+            challenges: []
         }
     },
     mutations: {
@@ -32,6 +33,9 @@ const store = createStore({
             state.userId = null
             state.username = null
             delete axios.defaults.headers.common["Authorization"];
+        },
+        setChallenges(state, challenges) {
+            state.challenges = challenges;
         }
     },
     actions: {
@@ -59,6 +63,14 @@ const store = createStore({
                 console.log(error)
             })
         },
+        getChallenges(context) {
+            axios.get('http://localhost:8080/challenges')
+            .then(response => {
+                context.commit('setChallenges', response.data.challenges)
+            }).catch(error => {
+                console.log(error)
+            })
+        }
     },
     getters: {
         isLoggedIn(state) {
@@ -72,6 +84,9 @@ const store = createStore({
         },
         username(state) {
             return state.username
+        },
+        challenges(state) {
+            return state.challenges
         }
     }
 })

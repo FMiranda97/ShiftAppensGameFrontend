@@ -2,8 +2,8 @@
   <header class="header">
     <router-link to="/" class="brand">{{ username || 'Home' }}</router-link>
     <div class="header-items">
-      <router-link to="/leaderboard" class="header-item">Leaderboard</router-link>
       <router-link to="/challenges" class="header-item">Desafios</router-link>
+      <router-link to="/leaderboard" class="header-item">Leaderboard</router-link>
       <router-link v-if="!isLoggedIn" to="/signup" class="header-item">Registo / Login</router-link>
       <button v-if="isLoggedIn" class="header-item" @click="logoutHandler">Logout</button>
     </div>

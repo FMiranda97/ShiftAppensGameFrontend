@@ -3,15 +3,23 @@
     <div class="points">80</div>
     <span class="points-label">Pontuação</span>
 
-    <span class="challenge-group">Desafios do momento</span>
-    <div class="challenges-now">
-      <ChallengeListing title="Descobre o caminho para caracas"></ChallengeListing>
-      <ChallengeListing title="Workshop sobre workshops"></ChallengeListing>
+    <span class="challenge-group" v-if="currentChallenges.length > 0">Desafios do momento</span>
+    <div class="challenges-now" v-if="currentChallenges.length > 0">
+      <ChallengeListing
+          v-for="challenge in currentChallenges"
+          :title="challenge.title"
+          :date="challenge.date"
+          :key="challenge._id"
+      ></ChallengeListing>
     </div>
-    <span class="challenge-group">Desafios futuros</span>
-    <div class="challenges-now">
-      <ChallengeListing title="Descobre o caminho para caracas"></ChallengeListing>
-      <ChallengeListing title="Workshop sobre workshops"></ChallengeListing>
+    <span class="challenge-group" v-if="futureChallenges.length > 0">Desafios futuros</span>
+    <div class="challenges-now" v-if="futureChallenges.length > 0">
+      <ChallengeListing
+          v-for="challenge in futureChallenges"
+          :title="challenge.title"
+          :date="challenge.date"
+          :key="challenge._id"
+      ></ChallengeListing>
     </div>
   </div>
 </template>
@@ -19,11 +27,30 @@
 <script>
 
 import ChallengeListing from "@/components/ChallengeListing";
+import {mapGetters} from "vuex";
 
 export default {
   name: "ChallengePage",
   components: {
     ChallengeListing
+  },
+  computed: {
+    ...mapGetters([
+      'challenges'
+    ]),
+    currentChallenges() {
+      return this.challenges.filter((challenge) => {
+        return new Date(challenge.date) < new Date()
+      })
+    },
+    futureChallenges() {
+      return this.challenges.filter((challenge) => {
+        return new Date(challenge.date) >= new Date()
+      })
+    }
+  },
+  mounted() {
+    this.$store.dispatch('getChallenges')
   }
 
 }
@@ -68,7 +95,6 @@ export default {
   background: #9400d3;
   /*border: 5px solid #b19cd9;*/
 }
-
 
 
 </style>
