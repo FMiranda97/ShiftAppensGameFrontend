@@ -7,7 +7,7 @@
 
 
     <span class="challenge-group" v-if="currentChallenges.length > 0">Desafios do momento</span>
-    <div class="challenges-now" v-if="currentChallenges.length > 0">
+    <div class="challenges" v-if="currentChallenges.length > 0">
       <ChallengeListing
           v-for="challenge in currentChallenges"
           :title="challenge.title"
@@ -18,7 +18,7 @@
       ></ChallengeListing>
     </div>
     <span class="challenge-group" v-if="futureChallenges.length > 0">Desafios futuros</span>
-    <div class="challenges-now" v-if="futureChallenges.length > 0">
+    <div class="challenges" v-if="futureChallenges.length > 0">
       <ChallengeListing
           v-for="challenge in futureChallenges"
           :title="challenge.title"
@@ -88,6 +88,8 @@ export default {
   width: 100%;
 }
 
+
+
 .points {
   font-size: 16rem;
   color: #9400d3;
@@ -99,7 +101,8 @@ export default {
   color: #b19cd9;
 }
 
-.challenges-now {
+
+.challenges {
   width: 100%;
   display: flex;
   flex-direction: column;
@@ -108,16 +111,40 @@ export default {
 
 .challenge-group {
   font-size: 2rem;
+  text-align: center;
   color: #9400d3;
   font-weight: bold;
   width: 60%;
 }
 
-.challenge:hover,
-.challenge:active {
-  background: #9400d3;
-  /*border: 5px solid #b19cd9;*/
-}
+@media (max-width: 50rem) {
+  .page {
+    margin: 0;
+  }
 
+  .points {
+    font-size: 8rem;
+    height: 10rem;
+    margin-top: 1rem;
+  }
+
+  .points-label {
+    font-size: 1rem;
+  }
+
+  .challenges {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .challenge-group {
+    font-size: 1rem;
+    color: #9400d3;
+    font-weight: bold;
+    width: 60%;
+  }
+}
 
 </style>

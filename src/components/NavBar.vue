@@ -133,6 +133,7 @@ export default {
 }
 
 .hamburguer {
+  display: none;
   appearance: none;
   background: none;
   border: none;
@@ -193,6 +194,10 @@ export default {
 }
 
 @media (max-width: 50rem) {
+  .hamburguer {
+    display: block;
+  }
+
   .brand {
     display: none;
   }

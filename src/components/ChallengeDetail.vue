@@ -95,6 +95,8 @@ export default {
   width: 60%;
 }
 
+
+
 .title {
   font-size: 2rem;
   font-weight: bold;
@@ -109,6 +111,28 @@ export default {
 
 label {
   font-size: 1rem;
+}
+
+@media (max-width: 50rem) {
+  .details {
+    width: 90%;
+    margin: 5rem 0 5rem 5%;
+  }
+  .time {
+    font-size: 0.8rem;
+  }
+
+  .description {
+    font-size: 1.2rem;
+  }
+
+  label {
+    font-size: 0.8rem;
+  }
+
+  span {
+    margin: 0.2rem 0;
+  }
 }
 
 input {
@@ -126,7 +150,6 @@ button {
   margin: 1rem;
   color: #9400d3;
 }
-
 
 .controls {
   display: flex;

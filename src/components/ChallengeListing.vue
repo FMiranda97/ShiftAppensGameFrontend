@@ -47,6 +47,8 @@ export default {
   cursor: pointer;
 }
 
+
+
 .date {
   position: absolute;
   left: 0;
@@ -62,5 +64,24 @@ export default {
   font-size: 0.8rem;
   padding: 0.2rem;
 }
+
+@media (max-width: 50rem) {
+  .challenge {
+    font-size: 1.2rem;
+    width: 90%;
+    padding: 1.5rem;
+  }
+
+  .points, .date {
+    font-size: 0.8rem;
+  }
+}
+
+.challenge:hover,
+.challenge:active {
+  background: #9400d3;
+  /*border: 5px solid #b19cd9;*/
+}
+
 
 </style>

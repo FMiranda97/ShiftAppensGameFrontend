@@ -36,8 +36,20 @@ export default {
   margin-left: 20%;
 }
 
+
 .welcome {
   color: #9400d3;
+}
+
+@media (max-width: 50rem) {
+  .home {
+    width: 90%;
+    margin-left: 5%;
+  }
+
+  .welcome {
+    text-align: center;
+  }
 }
 
 </style>
