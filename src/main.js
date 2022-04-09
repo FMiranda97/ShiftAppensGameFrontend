@@ -30,8 +30,6 @@ router.afterEach((to, from) => {
     const routesOrder = ["/", "/challenges", "/leaderboard", "/signup", "/login"]
     const toIndex = routesOrder.indexOf(to.path)
     const fromIndex = routesOrder.indexOf(from.path)
-    console.log(toIndex)
-    console.log(fromIndex)
     to.meta.transitionName = toIndex < fromIndex ? 'slide-right' : 'slide-left'
   })
 
@@ -41,7 +39,7 @@ app.use(store)
 app.use(router)
 
 import {library} from "@fortawesome/fontawesome-svg-core";
-import {faRankingStar, faFaceSmile, faCircleCheck, faCircleXmark} from "@fortawesome/free-solid-svg-icons";
+import {faRankingStar, faFaceSmile, faCircleCheck, faCircleXmark, faBars} from "@fortawesome/free-solid-svg-icons";
 import HomePage from "@/components/HomePage";
 
 app.component("font-awesome-icon", FontAwesomeIcon)
@@ -50,5 +48,6 @@ library.add(faFaceSmile)
 library.add(faFaceSmile)
 library.add(faCircleXmark)
 library.add(faCircleCheck)
+library.add(faBars)
 
 app.mount('#app')
