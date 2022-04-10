@@ -42,8 +42,7 @@ export default {
   computed: {
     ...mapGetters([
       'getChallenge',
-      'isLoggedIn',
-      'errorMessage'
+      'isLoggedIn'
     ]),
     title() {
       return this.getChallenge(this.id) && this.getChallenge(this.id).title
