@@ -7,6 +7,7 @@
       <input type="text" class="control" v-model="email">
       <label>Password</label>
       <input type="password" class="control" v-model="password">
+      <p v-if="errorMessage.length > 0" class="error">{{errorMessage}}</p>
       <button class="button">Registar</button>
       <router-link to="/login">Já te registaste?</router-link>
     </form>
@@ -15,6 +16,8 @@
 </template>
 
 <script>
+import {mapGetters} from "vuex";
+
 export default {
   name: "SignUp",
   data() {
@@ -23,6 +26,11 @@ export default {
       password: "",
       email: ""
     }
+  },
+  computed: {
+    ...mapGetters([
+      'errorMessage'
+    ])
   },
   methods: {
     signupHandler() {
@@ -56,6 +64,11 @@ export default {
 .control {
   font: inherit;
   margin: 0.2rem;
+}
+
+.error {
+  font-size: 1rem;
+  color: #551a8b;
 }
 
 @media (max-width: 50rem) {

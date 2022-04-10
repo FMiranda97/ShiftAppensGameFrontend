@@ -4,16 +4,26 @@
     <input type="text" class="control" v-model="username">
     <label>Password</label>
     <input type="password" class="control" v-model="password">
+    <p v-if="errorMessage.length > 0" class="error">{{errorMessage}}</p>
     <button class="button">Login</button>
     <router-link to="/signup"> Ainda não tens conta?</router-link>
   </form>
 </template>
 
 <script>
+import {mapGetters} from "vuex";
+
 export default {
   name: "SignUp",
+  computed: {
+    ...mapGetters([
+        'errorMessage'
+    ])
+  },
   methods: {
     loginHandler: function () {
+
+      this.$store.commit('setErrorMessage', "")
       this.$store.dispatch('login', {
         username: this.username,
         password: this.password
@@ -48,6 +58,11 @@ export default {
 .control {
   font: inherit;
   margin: 0.2rem;
+}
+
+.error {
+  font-size: 1rem;
+  color: #551a8b;
 }
 
 @media (max-width: 50rem) {

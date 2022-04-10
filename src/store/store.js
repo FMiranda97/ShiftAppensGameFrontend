@@ -15,7 +15,10 @@ const store = createStore({
         const authInfo = JSON.parse(localStorage.getItem('authInfo'))
         if (authInfo) {
             const state = {
-                ...authInfo, challenges: [], leaderboards: []
+                ...authInfo,
+                challenges: [],
+                leaderboards: [],
+                errorMessage: ""
             }
             const remainingTime = calculateRemainingTime(authInfo.expirationTime)
             setTimeout(() => {
@@ -32,7 +35,8 @@ const store = createStore({
             userId: null,
             username: null,
             challenges: [],
-            leaderboards: []
+            leaderboards: [],
+            errorMessage: ""
         }
     }, mutations: {
         login(state, payload) {
@@ -64,7 +68,9 @@ const store = createStore({
         }, setLeaderboard(state, leaderboards) {
             leaderboards.sort((a, b) => b.totalPoints - a.totalPoints)
             state.leaderboards = leaderboards
-        }
+        }, setErrorMessage(state, message) {
+            state.errorMessage = message;
+        },
     }, actions: {
         login(context, payload) {
             axios.post(`${process.env.VUE_APP_BACKEND_URL}/auth/login`, {
@@ -78,7 +84,7 @@ const store = createStore({
                 context.commit('login', {...response.data, expirationTime})
                 router.back()
             }).catch(error => {
-                console.log(error.response)
+                context.commit('setErrorMessage', error.response.data.message)
             })
         }, logout(context) {
             context.commit('logout')
@@ -91,6 +97,8 @@ const store = createStore({
                 context.commit('login', response.data)
                 router.push('/challenges')
             }).catch(error => {
+                console.log(error.response.data.data[0].msg)
+                context.commit('setErrorMessage', error.response.data.data[0].msg)
                 console.log(error.response)
             })
         }, getChallenges(context) {
@@ -139,6 +147,8 @@ const store = createStore({
             return state.challenges.find((challenge) => challenge._id === id)
         }, getLeaderboards: (state) => {
             return state.leaderboards
+        }, errorMessage: (state) => {
+            return state.errorMessage
         }
     }
 })
