@@ -12,7 +12,10 @@
           <button class="button">Enviar</button>
         </span>
         <span v-else-if="!alreadyStarted" class="not-started">Este evento ainda não começou!</span>
-        <font-awesome-icon icon="circle-check" class="checkMark" v-else/>
+        <template v-else>
+          <font-awesome-icon icon="circle-check" class="checkMark"/>
+          <button class="button" @click="backHandler">Continuar</button>
+        </template>
       </template>
       <router-link to="/login" class="button" v-else>Faz login para começar!</router-link>
 

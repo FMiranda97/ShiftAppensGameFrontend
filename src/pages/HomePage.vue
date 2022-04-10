@@ -15,6 +15,7 @@
 
     <p>Que o melhor jogador ganhe <font-awesome-icon icon="face-smile" /></p>
 
+    <router-link to="/signup" class="button">Começar</router-link>
 
   </div>
 </template>

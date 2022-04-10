@@ -9,6 +9,7 @@
         <router-link to="/" class="header-item" active-class="active" v-if="isOpen">{{ username || 'Home' }}</router-link>
         <router-link to="/challenges" class="header-item" active-class="active">Desafios</router-link>
         <router-link to="/leaderboard" class="header-item" active-class="active">Leaderboard</router-link>
+        <router-link to="/admin" class="header-item" active-class="active" v-if="isAdmin">Admin</router-link>
         <template v-if="!isLoggedIn">
           <router-link v-if="currentRouteName !== '/login'" to="/signup" class="header-item" active-class="active">
             Registo / Login
@@ -23,6 +24,7 @@
     <div class="header-items">
       <router-link to="/challenges" class="header-item" active-class="active">Desafios</router-link>
       <router-link to="/leaderboard" class="header-item" active-class="active">Leaderboard</router-link>
+      <router-link to="/admin" class="header-item" active-class="active" v-if="isAdmin">Admin</router-link>
       <template v-if="!isLoggedIn">
         <router-link v-if="currentRouteName !== '/login'" to="/signup" class="header-item" active-class="active">
           Registo / Login
