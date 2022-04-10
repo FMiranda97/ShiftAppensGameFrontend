@@ -19,8 +19,7 @@ const routes = [{path: '/', component: HomePage}, {path: '/challenges', componen
     path: '/login', component: SignIn, beforeEnter: () => store.getters.isLoggedIn ? {path: '/challenges'} : true
 }, {path: '/challenge/:id', component: ChallengeDetail, props: true}, {
     path: '/leaderboard', component: LeaderBoard
-}, {path: '/admin', component: AdminPage, beforeEnter: () => !store.getters.isAdmin ? {path: '/challenges'} : true},
-    {path: '/admin/createchallenge', component: CreateChallengePage, beforeEnter: () => !store.getters.isAdmin ? {path: '/challenges'} : true}
+}, {path: '/admin', component: AdminPage, beforeEnter: () => !store.getters.isAdmin ? {path: '/challenges'} : true}
 ]
 
 export const router = createRouter({
@@ -45,7 +44,6 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import HomePage from "@/pages/HomePage";
 import AdminPage from "@/pages/AdminPage";
-import CreateChallengePage from "@/pages/CreateChallengePage";
 
 app.component("font-awesome-icon", FontAwesomeIcon)
 library.add(faRankingStar)
