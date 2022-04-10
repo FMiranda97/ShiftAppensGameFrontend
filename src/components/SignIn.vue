@@ -5,7 +5,7 @@
     <label>Password</label>
     <input type="password" class="control" v-model="password">
     <button class="button">Login</button>
-    <router-link to="/signup">Esqueceu-se da password?</router-link>
+    <router-link to="/signup"> Ainda não tens conta?</router-link>
   </form>
 </template>
 
