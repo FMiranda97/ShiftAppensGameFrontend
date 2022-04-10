@@ -11,7 +11,7 @@
 
     <p>Na página inicial podes ver os desafios no momento que podes participar e os desafios mais tarde que poderás participar mais tarde. Caso queiras saber mais sobre desafio basta carrgares nos desafios da página principal.
       Após completares cada defafio receberás um código que terás que adicionar nesse mesmo desafio.
-      Pode ainda acompanhar quem está a ganhar na Leader Bord.</p>
+      Pode ainda acompanhar quem está a ganhar na Leaderboard.</p>
 
     <p>Que o melhor jogador ganhe <font-awesome-icon icon="face-smile" /></p>
 

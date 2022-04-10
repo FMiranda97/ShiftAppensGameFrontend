@@ -7,16 +7,18 @@
       <label for="validationCode">Código de validação</label>
       <template v-if="isLoggedIn">
         <span class="controls" v-if="!challengeCompleted && alreadyStarted">
+          <p v-if="errorMessage.length > 0" class="error">{{ errorMessage }}</p>
           <input id="validationCode" type="text" class="validation-code" v-model="validationCode">
           <button class="button">Enviar</button>
         </span>
         <span v-else-if="!alreadyStarted" class="not-started">Este evento ainda não começou!</span>
-        <font-awesome-icon icon="circle-xmark" class="checkMark" v-else-if="error"/>
         <font-awesome-icon icon="circle-check" class="checkMark" v-else/>
       </template>
       <router-link to="/login" class="button" v-else>Faz login para começar!</router-link>
 
-      <button class="button back-button" @click="backHandler"><font-awesome-icon icon="arrow-left"></font-awesome-icon></button>
+      <button class="button back-button" @click="backHandler">
+        <font-awesome-icon icon="arrow-left"></font-awesome-icon>
+      </button>
     </form>
   </div>
 </template>
@@ -33,13 +35,15 @@ export default {
     return {
       validationCode: "",
       challengeCompleted: false,
-      error: false
+      error: false,
+      errorMessage: ""
     }
   },
   computed: {
     ...mapGetters([
       'getChallenge',
-      'isLoggedIn'
+      'isLoggedIn',
+      'errorMessage'
     ]),
     title() {
       return this.getChallenge(this.id) && this.getChallenge(this.id).title
@@ -49,10 +53,10 @@ export default {
       return this.getChallenge(this.id) && moment(this.getChallenge(this.id).date).fromNow()
     },
     alreadyStarted() {
-      return new Date() > new Date(this.getChallenge(this.id).date)
+      return this.getChallenge(this.id) && new Date() > new Date(this.getChallenge(this.id).date)
     },
     preDateString() {
-      if (new Date() > new Date(this.getChallenge(this.id).date)) {
+      if (this.getChallenge(this.id) && new Date() > new Date(this.getChallenge(this.id).date)) {
         return "Começou"
       } else {
         return "Começa"
@@ -67,6 +71,7 @@ export default {
       this.$router.back()
     },
     submitHandler() {
+      this.errorMessage =""
       this.error = false
       axios.post(`${process.env.VUE_APP_BACKEND_URL}/challenges/validate`, {
         idChallenge: this.id,
@@ -76,8 +81,8 @@ export default {
             this.challengeCompleted = true
           })
           .catch(error => {
-            console.log(error.response)
             this.error = true
+            this.errorMessage = error.response.data.msg
           })
     }
   },
@@ -140,6 +145,11 @@ label {
   color: #9400d3;
   font-size: 1.2rem;
   font-weight: bold;
+}
+
+.error {
+  font-size: 1rem;
+  color: #551a8b;
 }
 
 @media (max-width: 50rem) {
