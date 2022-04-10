@@ -9,13 +9,13 @@
     <input id="date" type="datetime-local" v-model="date">
     <label for="points">Pontos</label>
     <input id="points" type="number" min="0" step="1" v-model="points">
-    <p class="error" v-if="message.length > 0">{{ message }}</p>
 
     <label for="codes">Gerar códigos</label>
     <input id="codes" type="number" min="0" step="1" v-model="randomCodes">
     <label for="specific">Código específico</label>
     <input id="specific" type="text" v-model="specificCode" placeholder="Opcional">
 
+    <p class="error" v-if="message.length > 0">{{ message }}</p>
     <button class="button">Criar</button>
     <button class="button back-button" @click="backHandler">
       <font-awesome-icon icon="arrow-left"></font-awesome-icon>
@@ -106,6 +106,8 @@ export default {
   width: 60%;
 }
 
+
+
 h1 {
   color: #9400d3;
   margin: 0;
@@ -142,6 +144,42 @@ textarea {
 .error {
   font-size: 1rem;
   color: #551a8b;
+}
+
+@media (max-width: 50rem) {
+  .controls {
+    width: 90%;
+    margin: 5rem 0 5rem 5%;
+  }
+
+  h1 {
+    font-size: 2rem;
+  }
+
+  .back-button {
+    position: static;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 3rem;
+    width: 3rem;
+    font-size: 2rem;
+  }
+
+  #title {
+    width: 80%;
+  }
+
+  textarea {
+    resize: none;
+    width: 80%;
+    font: inherit;
+    font-size: 1rem;
+  }
+
+  label {
+    font-size: 1rem;
+  }
 }
 
 </style>
