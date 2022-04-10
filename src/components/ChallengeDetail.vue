@@ -22,6 +22,13 @@
       <button class="button back-button" @click="backHandler">
         <font-awesome-icon icon="arrow-left"></font-awesome-icon>
       </button>
+      <div class="codes" v-if="isAdmin">
+        <h1>Códigos disponíveis</h1>
+        <template v-if="availableCodes.length > 0">
+          <span v-for="(value, index) in availableCodes" :key="index">{{ value }}</span>
+        </template>
+        <span class="error" v-else>Nenhum código disponível</span>
+      </div>
     </form>
   </div>
 </template>
@@ -45,7 +52,8 @@ export default {
   computed: {
     ...mapGetters([
       'getChallenge',
-      'isLoggedIn'
+      'isLoggedIn',
+        'isAdmin'
     ]),
     title() {
       return this.getChallenge(this.id) && this.getChallenge(this.id).title
@@ -66,7 +74,11 @@ export default {
     },
     description() {
       return this.getChallenge(this.id) && this.getChallenge(this.id).description
+    },
+    availableCodes() {
+      return this.getChallenge(this.id) && this.getChallenge(this.id).availableCodes
     }
+
   },
   methods: {
     backHandler() {
@@ -95,6 +107,20 @@ export default {
 </script>
 
 <style scoped>
+
+.codes {
+  display: flex;
+  flex-direction: column;
+}
+
+.codes span {
+  font-size: 2rem;
+  font-weight: bold;
+}
+
+.codes h1 {
+  color: #9400d3;
+}
 
 
 .details {
