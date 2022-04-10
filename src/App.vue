@@ -79,6 +79,8 @@ html, body {
 }
 
 .button {
+  display: flex;
+  flex-direction: column;
   appearance: none;
   text-decoration: none;
   font-size: 1.5rem;
@@ -95,6 +97,10 @@ html, body {
 .button:hover {
   background: #9400d3;
   color: white;
+}
+
+.back-button-text {
+  font-size: 0.5rem
 }
 
 

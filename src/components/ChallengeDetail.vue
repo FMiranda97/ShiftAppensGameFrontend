@@ -8,24 +8,40 @@
       <template v-if="isLoggedIn">
         <span class="controls" v-if="!challengeCompleted && alreadyStarted">
           <p v-if="errorMessage.length > 0" class="error">{{ errorMessage }}</p>
-          <input id="validationCode" type="text" class="validation-code" v-model="validationCode">
+          <input
+            id="validationCode"
+            type="text"
+            class="validation-code"
+            v-model="validationCode"
+          />
           <button class="button">Enviar</button>
         </span>
-        <span v-else-if="!alreadyStarted" class="not-started">Este evento ainda não começou!</span>
+        <span v-else-if="!alreadyStarted" class="not-started"
+          >Este evento ainda não começou!</span
+        >
         <template v-else>
-          <font-awesome-icon icon="circle-check" class="checkMark"/>
+          <font-awesome-icon icon="circle-check" class="checkMark" />
           <button class="button" @click="backHandler">Continuar</button>
         </template>
       </template>
-      <router-link to="/login" class="button" v-else>Faz login para começar!</router-link>
+      <router-link to="/login" class="button" v-else
+        >Faz login para começar!</router-link
+      >
 
-      <button class="button back-button" @click="backHandler">
+      <button
+        class="button back-button"
+        @click="backHandler"
+        name="back-button"
+      >
         <font-awesome-icon icon="arrow-left"></font-awesome-icon>
+        <span class="back-button-text">Voltar</span>
       </button>
       <div class="codes" v-if="isAdmin">
         <h1>Códigos disponíveis</h1>
         <template v-if="availableCodes.length > 0">
-          <span v-for="(value, index) in availableCodes" :key="index">{{ value }}</span>
+          <span v-for="(value, index) in availableCodes" :key="index">{{
+            value
+          }}</span>
         </template>
         <span class="error" v-else>Nenhum código disponível</span>
       </div>
@@ -35,79 +51,87 @@
 
 <script>
 import moment from "moment";
-import {mapGetters} from "vuex";
+import { mapGetters } from "vuex";
 import axios from "axios";
 
 export default {
   name: "ChallengeDetail",
-  props: ['id'],
+  props: ["id"],
   data() {
     return {
       validationCode: "",
       challengeCompleted: false,
       error: false,
-      errorMessage: ""
-    }
+      errorMessage: "",
+    };
   },
   computed: {
-    ...mapGetters([
-      'getChallenge',
-      'isLoggedIn',
-        'isAdmin'
-    ]),
+    ...mapGetters(["getChallenge", "isLoggedIn", "isAdmin"]),
     title() {
-      return this.getChallenge(this.id) && this.getChallenge(this.id).title
+      return this.getChallenge(this.id) && this.getChallenge(this.id).title;
     },
     date() {
-      moment.locale('pt-pt')
-      return this.getChallenge(this.id) && moment(this.getChallenge(this.id).date).fromNow()
+      moment.locale("pt-pt");
+      return (
+        this.getChallenge(this.id) &&
+        moment(this.getChallenge(this.id).date).fromNow()
+      );
     },
     alreadyStarted() {
-      return this.getChallenge(this.id) && new Date() > new Date(this.getChallenge(this.id).date)
+      return (
+        this.getChallenge(this.id) &&
+        new Date() > new Date(this.getChallenge(this.id).date)
+      );
     },
     preDateString() {
-      if (this.getChallenge(this.id) && new Date() > new Date(this.getChallenge(this.id).date)) {
-        return "Começou"
+      if (
+        this.getChallenge(this.id) &&
+        new Date() > new Date(this.getChallenge(this.id).date)
+      ) {
+        return "Começou";
       } else {
-        return "Começa"
+        return "Começa";
       }
     },
     description() {
-      return this.getChallenge(this.id) && this.getChallenge(this.id).description
+      return (
+        this.getChallenge(this.id) && this.getChallenge(this.id).description
+      );
     },
     availableCodes() {
-      return this.getChallenge(this.id) && this.getChallenge(this.id).availableCodes
-    }
-
+      return (
+        this.getChallenge(this.id) && this.getChallenge(this.id).availableCodes
+      );
+    },
   },
   methods: {
     backHandler() {
-      this.$router.back()
+      this.$router.back();
     },
     submitHandler() {
-      this.errorMessage =""
-      this.error = false
-      axios.post(`${process.env.VUE_APP_BACKEND_URL}/challenges/validate`, {
-        idChallenge: this.id,
-        code: this.validationCode
-      })
-          .then(() => {
-            this.challengeCompleted = true
-          })
-          .catch(error => {
-            this.error = true
-            this.errorMessage = error.response.data.msg
-          })
-    }
+      this.errorMessage = "";
+      this.error = false;
+      axios
+        .post(`${process.env.VUE_APP_BACKEND_URL}/challenges/validate`, {
+          idChallenge: this.id,
+          code: this.validationCode,
+        })
+        .then(() => {
+          this.challengeCompleted = true;
+        })
+        .catch((error) => {
+          this.error = true;
+          this.errorMessage = error.response.data.msg;
+        });
+    },
   },
   created() {
-    this.$store.dispatch('getChallenges')
-  }
-}
+    this.$store.dispatch("getChallenges");
+  },
+};
 </script>
 
 <style scoped>
-
 .codes {
   display: flex;
   flex-direction: column;
@@ -122,9 +146,7 @@ export default {
   color: #9400d3;
 }
 
-
 .details {
-
   position: relative;
   margin: 5rem 0 5rem 20%;
   display: flex;
@@ -138,7 +160,6 @@ export default {
   border: 5px solid #9400d3;
   width: 60%;
 }
-
 
 .title {
   font-size: 2rem;
@@ -239,5 +260,4 @@ button {
   display: flex;
   flex-direction: column;
 }
-
 </style>

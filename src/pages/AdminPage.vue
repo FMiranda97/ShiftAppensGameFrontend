@@ -17,8 +17,9 @@
 
     <p class="error" v-if="message.length > 0">{{ message }}</p>
     <button class="button">Criar</button>
-    <button class="button back-button" @click="backHandler">
+    <button class="button back-button" @click="backHandler" name="back-button">
       <font-awesome-icon icon="arrow-left"></font-awesome-icon>
+      <span class="back-button-text">Voltar</span>
     </button>
   </form>
 
