@@ -1,5 +1,5 @@
 <template>
-  <div class="challenge" @click="showDetailHandler">
+  <div :class="{'challenge': true, 'future': isFuture}" @click="showDetailHandler">
     {{ title }}
     <span class="date">{{preDateString}} {{ formattedDate }}</span>
     <span class="points">Pontos: {{ points || 'desconhecido' }}</span>
@@ -11,7 +11,7 @@ import moment from 'moment'
 
 export default {
   name: "ChallengeListing",
-  props: ['title', 'date', 'points', 'id'],
+  props: ['title', 'date', 'points', 'id', 'isFuture'],
   computed: {
     formattedDate() {
       moment.locale("pt-pt")
@@ -83,5 +83,17 @@ export default {
   /*border: 5px solid #b19cd9;*/
 }
 
+.future {
+  background: #CBC3E3;
+  border: 4px solid #b19cd9;
+  color: #b19cd9;
+}
+
+.future:hover,
+.future:active {
+  background: #b19cd9;
+  border: 4px solid #CBC3E3;
+  color: #CBC3E3;
+}
 
 </style>

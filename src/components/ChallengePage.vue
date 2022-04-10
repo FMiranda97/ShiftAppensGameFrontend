@@ -26,6 +26,7 @@
           :id="challenge._id"
           :points="challenge.points"
           :key="challenge._id"
+          is-future="true"
       ></ChallengeListing>
     </div>
   </div>
@@ -119,7 +120,7 @@ export default {
 
 @media (max-width: 50rem) {
   .page {
-    margin: 0;
+    margin: 5rem 0;
   }
 
   .points {
