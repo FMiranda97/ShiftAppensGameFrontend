@@ -39,7 +39,7 @@ app.use(store)
 app.use(router)
 
 import {library} from "@fortawesome/fontawesome-svg-core";
-import {faRankingStar, faFaceSmile, faCircleCheck, faCircleXmark, faBars} from "@fortawesome/free-solid-svg-icons";
+import {faRankingStar, faFaceSmile, faCircleCheck, faCircleXmark, faBars, faArrowLeft} from "@fortawesome/free-solid-svg-icons";
 import HomePage from "@/components/HomePage";
 
 app.component("font-awesome-icon", FontAwesomeIcon)
@@ -49,5 +49,7 @@ library.add(faFaceSmile)
 library.add(faCircleXmark)
 library.add(faCircleCheck)
 library.add(faBars)
+library.add(faArrowLeft)
+
 
 app.mount('#app')

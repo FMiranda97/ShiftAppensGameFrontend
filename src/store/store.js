@@ -76,7 +76,7 @@ const store = createStore({
                     context.dispatch('logout');
                 }, remainingTime)
                 context.commit('login', {...response.data, expirationTime})
-                router.push('/challenges')
+                router.back()
             }).catch(error => {
                 console.log(error.response)
             })
