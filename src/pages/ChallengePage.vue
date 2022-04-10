@@ -5,6 +5,10 @@
       <span class="points-label">Pontuação</span>
     </template>
 
+    <div class="search-container">
+      <font-awesome-icon icon="magnifying-glass"></font-awesome-icon>
+      <input type="text" v-model="filterText" class="search-bar">
+    </div>
 
     <span class="challenge-group" v-if="currentChallenges.length > 0">Desafios do momento</span>
     <div class="challenges" v-if="currentChallenges.length > 0">
@@ -45,7 +49,8 @@ export default {
   },
   data() {
     return {
-      points: '?'
+      points: '?',
+      filterText: ''
     }
   },
   computed: {
@@ -53,13 +58,18 @@ export default {
       'challenges',
         'isLoggedIn'
     ]),
-    currentChallenges() {
+    filteredChallenges() {
       return this.challenges.filter((challenge) => {
+        return challenge.title.toLowerCase().includes(this.filterText.toLowerCase())
+      })
+    },
+    currentChallenges() {
+      return this.filteredChallenges.filter((challenge) => {
         return new Date(challenge.date) < new Date()
       })
     },
     futureChallenges() {
-      return this.challenges.filter((challenge) => {
+      return this.filteredChallenges.filter((challenge) => {
         return new Date(challenge.date) >= new Date()
       })
     }
@@ -81,6 +91,24 @@ export default {
 </script>
 
 <style scoped>
+.search-container {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  font-size: 1.2rem;
+  color: #9400d3;
+  width: 60%;
+}
+
+.search-bar {
+  appearance: none;
+  border: 4px solid #b19cd9;
+  font: inherit;
+  color: #9400d3;
+  width: 100%;
+  margin: 1rem;
+}
+
 .page {
   margin: 3rem;
   display: flex;
