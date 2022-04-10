@@ -1,7 +1,7 @@
 <template>
   <header class="header">
     <div class="backdrop" v-if="isOpen" @click="closeMenuHandler"></div>
-    <button class="hamburguer" @click="openMenuHandler"><font-awesome-icon icon="bars"></font-awesome-icon></button>
+    <button class="open-menu-button" @click="openMenuHandler"><font-awesome-icon icon="bars" name="openMenu"></font-awesome-icon></button>
 
     <router-link to="/" class="brand" active-class="active-home" v-if="!isOpen">{{ username || 'Home' }}</router-link>
     <transition name="slide">
@@ -135,7 +135,7 @@ export default {
   z-index: 1;
 }
 
-.hamburguer {
+.open-menu-button {
   display: none;
   appearance: none;
   background: none;
@@ -197,7 +197,7 @@ export default {
 }
 
 @media (max-width: 50rem) {
-  .hamburguer {
+  .open-menu-button {
     display: block;
   }
 
