@@ -40,7 +40,7 @@ app.use(router)
 
 import {library} from "@fortawesome/fontawesome-svg-core";
 import {
-    faRankingStar, faFaceSmile, faCircleCheck, faCircleXmark, faBars, faArrowLeft
+    faRankingStar, faFaceSmile, faCircleCheck, faCircleXmark, faBars, faArrowLeft, faMagnifyingGlass
 } from "@fortawesome/free-solid-svg-icons";
 import HomePage from "@/pages/HomePage";
 import AdminPage from "@/pages/AdminPage";
@@ -53,6 +53,7 @@ library.add(faCircleXmark)
 library.add(faCircleCheck)
 library.add(faBars)
 library.add(faArrowLeft)
+library.add(faMagnifyingGlass)
 
 
 app.mount('#app')

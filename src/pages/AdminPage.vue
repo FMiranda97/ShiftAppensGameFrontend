@@ -152,6 +152,10 @@ textarea {
     margin: 5rem 0 5rem 5%;
   }
 
+  input {
+    font-size: 0.8rem;
+  }
+
   h1 {
     font-size: 2rem;
   }
@@ -174,7 +178,7 @@ textarea {
     resize: none;
     width: 80%;
     font: inherit;
-    font-size: 1rem;
+    font-size: 0.8rem;
   }
 
   label {
