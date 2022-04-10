@@ -245,10 +245,7 @@ input {
   font-size: 1rem;
 }
 
-button {
-  font: inherit;
-  font-size: 1rem;
-}
+
 
 .checkMark {
   font-size: 2rem;

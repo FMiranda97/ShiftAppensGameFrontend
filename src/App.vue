@@ -81,6 +81,8 @@ html, body {
 .button {
   display: flex;
   flex-direction: column;
+  justify-content: center;
+  align-items: center;
   appearance: none;
   text-decoration: none;
   font-size: 1.5rem;
